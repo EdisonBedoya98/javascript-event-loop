@@ -1,0 +1,102 @@
+h1{font-size:1.6rem;font-weight:700;margin-bottom:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center}
+.subtitle{color:var(--dim);font-size:.85rem;margin-bottom:20px;text-align:center}
+
+.container{display:grid;grid-template-columns:260px 1fr 260px;grid-template-rows:220px auto;gap:16px;max-width:960px;width:100%}
+
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+.panel-title{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.panel-title .dot{width:8px;height:8px;border-radius:50%}
+
+.call-stack{grid-column:1;grid-row:1}
+.call-stack .dot{background:var(--accent)}
+.web-apis{grid-column:3;grid-row:1}
+.web-apis .dot{background:var(--accent2)}
+.event-loop-panel{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.queues{grid-column:1/4;grid-row:2;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.queues .panel{min-height:120px}
+.microtask-queue .dot{background:var(--accent3)}
+.callback-queue .dot{background:var(--accent4)}
+
+.stack-items,.queue-items,.api-items{display:flex;flex-direction:column;gap:6px}
+.stack-items{flex-direction:column-reverse}
+
+.item{padding:8px 12px;border-radius:8px;font-size:.8rem;font-family:'Fira Code',monospace;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.item.stack{background:rgba(108,92,231,.15);border:1px solid rgba(108,92,231,.3);color:#a29bfe}
+.item.api{background:rgba(0,206,201,.12);border:1px solid rgba(0,206,201,.3);color:#81ecec}
+.item.micro{background:rgba(253,203,110,.12);border:1px solid rgba(253,203,110,.3);color:#ffeaa7}
+.item.task{background:rgba(225,112,85,.12);border:1px solid rgba(225,112,85,.3);color:#fab1a0}
+.item.removing{animation:popOut .3s ease forwards}
+
+@keyframes popIn{from{opacity:0;transform:translateY(-10px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes popOut{to{opacity:0;transform:translateY(10px) scale(.85)}}
+
+/* Transfer bubble (flies between panels) */
+.transfer-bubble{position:absolute;z-index:100;pointer-events:none;width:160px;text-align:center;box-shadow:0 0 20px rgba(108,92,231,.4),0 0 60px rgba(108,92,231,.15);animation:none}
+.transfer-bubble.stack{box-shadow:0 0 20px rgba(108,92,231,.5),0 0 60px rgba(108,92,231,.2)}
+.transfer-bubble.api{box-shadow:0 0 20px rgba(0,206,201,.5),0 0 60px rgba(0,206,201,.2)}
+.transfer-bubble.micro{box-shadow:0 0 20px rgba(253,203,110,.5),0 0 60px rgba(253,203,110,.2)}
+.transfer-bubble.task{box-shadow:0 0 20px rgba(225,112,85,.5),0 0 60px rgba(225,112,85,.2)}
+
+.loop-ring{width:100px;height:100px;position:relative;margin:8px 0}
+.loop-ring svg{width:100%;height:100%}
+.loop-ring .track{fill:none;stroke:var(--border);stroke-width:4}
+.loop-ring .progress{fill:none;stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-dasharray:251;stroke-dashoffset:251;transition:stroke-dashoffset .4s ease}
+.loop-ring.active .progress{animation:loopSpin 1.2s linear infinite}
+.loop-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--dim);text-align:center}
+.loop-status{font-size:.75rem;color:var(--green);text-align:center;margin-top:4px;min-height:1.2em}
+@keyframes loopSpin{to{stroke-dashoffset:0}}
+
+.controls{display:flex;gap:10px;margin:20px 0 12px;flex-wrap:wrap;justify-content:center}
+.btn{padding:8px 18px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;cursor:pointer;font-size:.8rem;transition:all .2s}
+.btn:hover{border-color:var(--accent);background:rgba(108,92,231,.1)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#5a4bd1}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.speed-control{display:flex;align-items:center;gap:8px;color:var(--dim);font-size:.75rem}
+.speed-control input{width:100px;accent-color:var(--accent)}
+
+.code-display{background:#12141c;border:1px solid var(--border);border-radius:12px;padding:16px;max-width:960px;width:100%;margin-top:12px;font-family:'Fira Code',monospace;font-size:.78rem;line-height:1.7;overflow-x:auto}
+.code-display .line{padding:1px 0;border-radius:4px;transition:background .3s}
+.code-display .line.active{background:rgba(108,92,231,.2)}
+.code-display .line .ln{color:var(--dim);display:inline-block;width:24px;text-align:right;margin-right:12px;user-select:none}
+.kw{color:#c792ea}.fn{color:#82aaff}.str{color:#c3e88d}.cm{color:#546e7a}.num{color:#f78c6c}.op{color:#89ddff}
+
+.legend{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--dim)}
+.legend-item .swatch{width:10px;height:10px;border-radius:3px}
+
+/* ── Mobile responsive ── */
+@media(max-width:768px){
+  .container{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:10px}
+  .call-stack{grid-column:1;grid-row:1}
+  .web-apis{grid-column:2;grid-row:1}
+  .event-loop-panel{grid-column:1/3;grid-row:2;flex-direction:row;gap:12px;padding:12px}
+  .loop-ring{width:60px;height:60px;margin:0}
+  .loop-status{font-size:.7rem;text-align:left}
+  .queues{grid-column:1/3;grid-row:3;grid-template-columns:1fr 1fr}
+  .queues .panel{min-height:80px}
+  .item{font-size:.7rem;padding:6px 8px}
+  .transfer-bubble{width:120px;font-size:.7rem}
+  .code-display{padding:12px;font-size:.7rem}
+}
+
+@media(max-width:480px){
+  .container{grid-template-columns:1fr;grid-template-rows:auto}
+  .call-stack{grid-column:1;grid-row:1}
+  .event-loop-panel{grid-column:1;grid-row:2;flex-direction:row;gap:10px;padding:10px}
+  .web-apis{grid-column:1;grid-row:3}
+  .queues{grid-column:1;grid-row:4;grid-template-columns:1fr}
+  .loop-ring{width:50px;height:50px}
+  .loop-status{font-size:.65rem}
+  .panel{padding:12px;border-radius:8px}
+  .panel-title{font-size:.6rem;letter-spacing:1px}
+  .btn{padding:6px 14px;font-size:.75rem}
+  .speed-control input{width:70px}
+  .code-display{font-size:.65rem;padding:10px;border-radius:8px}
+  .code-display .line .ln{width:18px;margin-right:8px}
+  .legend{gap:10px}
+  .legend-item{font-size:.6rem}
+  h1{font-size:1.3rem}
+  .subtitle{font-size:.75rem}
+}

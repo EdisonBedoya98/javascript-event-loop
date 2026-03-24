@@ -1,0 +1,9 @@
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;
+  --accent:#6c5ce7;--accent2:#00cec9;--accent3:#fdcb6e;--accent4:#e17055;
+  --text:#e2e4e9;--dim:#7f8694;--green:#00b894;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px}
+#root{width:960px;max-width:100%;display:flex;flex-direction:column;align-items:center;padding:0 12px}
+@media(max-width:640px){body{padding:12px 0}}
