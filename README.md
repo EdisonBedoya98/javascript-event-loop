@@ -1,16 +1,47 @@
-# React + Vite
+# JavaScript Event Loop — Interactive Animation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive step-by-step visualization of the JavaScript Event Loop built with React and Vite. Watch how the Call Stack, Web APIs, Microtask Queue, and Macrotask Queue work together in real time.
 
-Currently, two official plugins are available:
+![Event Loop Visualization](src/assets/image.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Step-by-step execution** — Walk through each phase of the event loop at your own pace
+- **Animated transfers** — Visual flying bubbles show items moving between panels (Call Stack, Web APIs, Queues)
+- **Play / Pause / Step controls** — Auto-play with adjustable speed (0.5x – 2x), or advance one step at a time
+- **Syntax-highlighted code** — The currently executing line is highlighted in the source code panel
+- **Responsive design** — Works on desktop, tablet, and mobile
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How It Works
 
-## Expanding the ESLint configuration
+The visualization demonstrates this code:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```js
+console.log("Start")
+
+setTimeout(() => {
+  console.log("Timeout")
+}, 0)
+
+Promise.resolve().then(() => {
+  console.log("Promise")
+})
+
+console.log("End")
+```
+
+**Output order:** `Start` → `End` → `Promise` → `Timeout`
+
+This shows how synchronous code runs first, then microtasks (Promises), then macrotasks (setTimeout) — the core behavior of the JavaScript event loop.
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## Tech Stack
+
+- [React](https://react.dev)
+- [Vite](https://vite.dev)
